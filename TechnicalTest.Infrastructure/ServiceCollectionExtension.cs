@@ -19,7 +19,7 @@ namespace TechnicalTest.Infrastructure
         private static IServiceCollection AddRepositories(this IServiceCollection services)
         {
             return services.AddScoped<IPostRepository, PostRepository>()
-                .AddScoped<IAuthorRepository, _sut>();
+                .AddScoped<IAuthorRepository, AuthorRepository>();
 
         }
 

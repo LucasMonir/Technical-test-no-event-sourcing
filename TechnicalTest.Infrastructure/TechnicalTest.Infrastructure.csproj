@@ -31,9 +31,4 @@
     </AssemblyAttribute>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Events\" />
-    <Folder Include="Persistence\Migrations\" />
-  </ItemGroup>
-
 </Project>

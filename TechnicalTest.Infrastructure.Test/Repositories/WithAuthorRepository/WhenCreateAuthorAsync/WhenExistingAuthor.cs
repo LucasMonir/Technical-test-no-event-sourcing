@@ -13,7 +13,7 @@ namespace TechnicalTest.Infrastructure.Test.Repositories.WithAuthorRepository.Wh
     public class WhenExistingAuthor : IAsyncLifetime
     {
         private readonly AppDbContext _dbContext;
-        private readonly _sut _sut;
+        private readonly AuthorRepository _sut;
         private readonly IUnitOfWork _unitOfWork;
         private readonly Author _author;
 
@@ -25,7 +25,7 @@ namespace TechnicalTest.Infrastructure.Test.Repositories.WithAuthorRepository.Wh
             _dbContext = new TestDbContextFactory().Context;
             _unitOfWork = new UnitOfWork(_dbContext);
 
-            _sut = new _sut(_dbContext);
+            _sut = new AuthorRepository(_dbContext);
         }
 
         [Fact]

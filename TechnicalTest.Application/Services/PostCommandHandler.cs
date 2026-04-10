@@ -31,37 +31,5 @@ namespace TechnicalTest.Application.Services
 
             return post.Id;
         }
-
-        //private async Task<Guid> GetAuthor(CreatePostCommand command)
-        //{
-        //    if (command.AuthorId.HasValue)
-        //        return await ResolveExistingAuthorId(command.AuthorId.Value);
-
-        //    if (command.Author is not null)
-        //        return await CreateNewAuthorId(command.Author);
-
-        //    throw new InvalidOperationException("Cannot create post: no author provided.");
-        //}
-
-        //private async Task<Guid> CreateNewAuthorId(AuthorModel authorModel)
-        //{
-        //    var name = authorModel.Name?.Trim();
-        //    var surname = authorModel.Surname?.Trim();
-
-        //    if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(surname))
-        //        throw new InvalidOperationException("Author name and surname are required.");
-
-        //    return await _authorRepository.CreateAuthorAsync(Author.Create(name, surname));
-        //}
-
-        //private async Task<Guid> ResolveExistingAuthorId(Guid authorId)
-        //{
-        //    var author = await _authorRepository.GetPostAuthorAsync(authorId);
-
-        //    if (author is null)
-        //        throw new InvalidOperationException("AuthorId not found.");
-
-        //    return author.Id;
-        //}
     }
 }

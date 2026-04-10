@@ -4,7 +4,7 @@ using TechnicalTest.Domain;
 
 namespace TechnicalTest.Infrastructure.Repositories
 {
-    internal class _sut(AppDbContext dbContext) : IAuthorRepository
+    internal class AuthorRepository(AppDbContext dbContext) : IAuthorRepository
     {
         private readonly AppDbContext _dbContext = dbContext;
 

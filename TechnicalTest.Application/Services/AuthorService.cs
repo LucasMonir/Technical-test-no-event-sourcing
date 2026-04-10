@@ -26,7 +26,7 @@ namespace TechnicalTest.Application.Services
             var surname = authorModel.Surname?.Trim();
 
             if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(surname))
-                throw new InvalidOperationException("Author name and surname are required.");
+                throw new InvalidOperationException("Author name and surname are required for new posts.");
 
             var author = Author.Create(name, surname);
 
