@@ -1,13 +1,11 @@
 ﻿using FluentAssertions;
 using NSubstitute;
-using TechnicalTest.Application.Abstractions.Events;
 using TechnicalTest.Application.Abstractions.Persistence;
 using TechnicalTest.Application.Abstractions.Repositories;
 using TechnicalTest.Application.Abstractions.Services;
 using TechnicalTest.Application.Commands;
 using TechnicalTest.Application.Services;
 using TechnicalTest.Domain;
-using TechnicalTest.Domain.Events;
 using TechnicalTest.TestHelpers.Builders.Domain;
 
 namespace TechnicalTest.Application.Test.Services.WithPostCommandHandler.WhenHandle
@@ -16,7 +14,6 @@ namespace TechnicalTest.Application.Test.Services.WithPostCommandHandler.WhenHan
     {
         private readonly IPostRepository _postRepository;
         private readonly IAuthorResolver _authorResolver;
-        private readonly IEventStore _eventStore;
         private readonly IUnitOfWork _unitOfWork;
 
         private readonly CreatePostCommand _createPostCommand;
@@ -49,15 +46,12 @@ namespace TechnicalTest.Application.Test.Services.WithPostCommandHandler.WhenHan
             _postRepository = Substitute.For<IPostRepository>();
 
             _unitOfWork = Substitute.For<IUnitOfWork>();
-            _eventStore = Substitute.For<IEventStore>();
 
             _sut = new PostCommandHandler(
                 _postRepository,
                 _authorResolver,
-                _eventStore,
                 _unitOfWork);
         }
-
 
         [Fact]
         public async Task ThenMustCallRepository()
@@ -72,26 +66,6 @@ namespace TechnicalTest.Application.Test.Services.WithPostCommandHandler.WhenHan
                 p.Title == _post.Title &&
                 p.Description == _post.Description &&
                 p.Content == _post.Content)
-            );
-        }
-
-        [Fact]
-        public async Task ThenMustCallEventStore()
-        {
-            var result = await _sut.Handle(_createPostCommand);
-
-            await _eventStore.Received(1).AppendAsync(
-                $"post-{result}",
-                expectedVersion: 0,
-                Arg.Is<IReadOnlyCollection<object>>(events =>
-                    events.OfType<PostCreatedEvent>().Any(e =>
-                        e.PostId == result &&
-                        e.AuthorId == _author.Id &&
-                        e.Title == _post.Title &&
-                        e.Description == _post.Description &&
-                        e.Content == _post.Content
-                    )
-                )
             );
         }
 

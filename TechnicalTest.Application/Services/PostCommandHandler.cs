@@ -1,22 +1,18 @@
-﻿using TechnicalTest.Application.Abstractions.Events;
-using TechnicalTest.Application.Abstractions.Persistence;
+﻿using TechnicalTest.Application.Abstractions.Persistence;
 using TechnicalTest.Application.Abstractions.Repositories;
 using TechnicalTest.Application.Abstractions.Services;
 using TechnicalTest.Application.Commands;
 using TechnicalTest.Domain;
-using TechnicalTest.Domain.Events;
 
 namespace TechnicalTest.Application.Services
 {
     internal class PostCommandHandler(IPostRepository postRepository,
         IAuthorResolver authorResolver,
-        IEventStore eventStore,
         IUnitOfWork unitOfWork)
         : IPostCommandHandler
     {
         private readonly IPostRepository _postRepository = postRepository;
         private readonly IAuthorResolver _authorResolver = authorResolver;
-        private readonly IEventStore _eventStore = eventStore;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
         public async Task<Guid> Handle(CreatePostCommand command)
@@ -30,17 +26,7 @@ namespace TechnicalTest.Application.Services
                 command.Content
             );
 
-            var postCreated = new PostCreatedEvent(
-                post.Id,
-                post.AuthorId,
-                post.Title,
-                post.Description,
-                post.Content,
-                DateTimeOffset.UtcNow);
-
-            await _eventStore.AppendAsync($"post-{post.Id}", expectedVersion: 0, [postCreated]);
             await _postRepository.CreatePostAsync(post);
-
             await _unitOfWork.CommitAsync();
 
             return post.Id;

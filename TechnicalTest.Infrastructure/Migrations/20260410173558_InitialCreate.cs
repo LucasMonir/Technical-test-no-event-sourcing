@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace TechnicalTest.Infrastructure.Persistence.Persistence.Migrations
+namespace TechnicalTest.Infrastructure.Migrations
 {
     /// <inheritdoc />
     public partial class InitialCreate : Migration
@@ -22,22 +22,6 @@ namespace TechnicalTest.Infrastructure.Persistence.Persistence.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Authors", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "StoredEvents",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    StreamId = table.Column<string>(type: "TEXT", nullable: false),
-                    Version = table.Column<int>(type: "INTEGER", nullable: false),
-                    EventType = table.Column<string>(type: "TEXT", nullable: false),
-                    EventData = table.Column<string>(type: "TEXT", nullable: false),
-                    OccurredAt = table.Column<DateTimeOffset>(type: "TEXT", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_StoredEvents", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -65,12 +49,6 @@ namespace TechnicalTest.Infrastructure.Persistence.Persistence.Migrations
                 name: "IX_Posts_AuthorId",
                 table: "Posts",
                 column: "AuthorId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_StoredEvents_StreamId_Version",
-                table: "StoredEvents",
-                columns: new[] { "StreamId", "Version" },
-                unique: true);
         }
 
         /// <inheritdoc />
@@ -78,9 +56,6 @@ namespace TechnicalTest.Infrastructure.Persistence.Persistence.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Posts");
-
-            migrationBuilder.DropTable(
-                name: "StoredEvents");
 
             migrationBuilder.DropTable(
                 name: "Authors");

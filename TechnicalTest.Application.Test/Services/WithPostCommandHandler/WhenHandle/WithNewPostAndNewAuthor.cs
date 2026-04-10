@@ -1,6 +1,5 @@
 ﻿using FluentAssertions;
 using NSubstitute;
-using TechnicalTest.Application.Abstractions.Events;
 using TechnicalTest.Application.Abstractions.Persistence;
 using TechnicalTest.Application.Abstractions.Repositories;
 using TechnicalTest.Application.Abstractions.Services;
@@ -15,7 +14,6 @@ namespace TechnicalTest.Application.Test.Services.WithPostCommandHandler.WhenHan
     {
         private readonly IAuthorResolver _authorResolver;
         private readonly IPostRepository _postRepository;
-        private readonly IEventStore _eventStore;
         private readonly IUnitOfWork _unitOfWork;
 
         private readonly CreatePostCommand _createPostCommand;
@@ -52,12 +50,10 @@ namespace TechnicalTest.Application.Test.Services.WithPostCommandHandler.WhenHan
             _postRepository = Substitute.For<IPostRepository>();
 
             _unitOfWork = Substitute.For<IUnitOfWork>();
-            _eventStore = Substitute.For<IEventStore>();
 
             _sut = new PostCommandHandler(
                 _postRepository,
                 _authorResolver,
-                _eventStore,
                 _unitOfWork);
         }
 

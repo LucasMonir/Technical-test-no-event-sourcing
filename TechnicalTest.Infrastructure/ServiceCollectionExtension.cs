@@ -1,9 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using TechnicalTest.Application.Abstractions.Events;
 using TechnicalTest.Application.Abstractions.Persistence;
 using TechnicalTest.Application.Abstractions.Repositories;
-using TechnicalTest.Infrastructure.Events;
 using TechnicalTest.Infrastructure.Repositories;
 using TechnicalTest.Infrastructure.Services;
 
@@ -15,7 +13,6 @@ namespace TechnicalTest.Infrastructure
         {
             return services.AddRepositories()
                 .AddDbContext(connectionString)
-                .AddEventStore()
                 .AddUnitOfWork();
         }
 
@@ -30,11 +27,6 @@ namespace TechnicalTest.Infrastructure
         {
             return services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlite(connectionString));
-        }
-
-        private static IServiceCollection AddEventStore(this IServiceCollection services)
-        {
-            return services.AddScoped<IEventStore, EfEventStore>();
         }
 
         private static IServiceCollection AddUnitOfWork(this IServiceCollection services)

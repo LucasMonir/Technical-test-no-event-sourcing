@@ -2,16 +2,20 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using TechnicalTest.Infrastructure;
 
 #nullable disable
 
-namespace TechnicalTest.Infrastructure.Persistence.Persistence.Migrations
+namespace TechnicalTest.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260410173558_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "10.0.5");
@@ -61,38 +65,6 @@ namespace TechnicalTest.Infrastructure.Persistence.Persistence.Migrations
                     b.HasIndex("AuthorId");
 
                     b.ToTable("Posts");
-                });
-
-            modelBuilder.Entity("TechnicalTest.Infrastructure.Persistence.Events.StoredEvent", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("EventData")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("EventType")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTimeOffset>("OccurredAt")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("StreamId")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("Version")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("StreamId", "Version")
-                        .IsUnique();
-
-                    b.ToTable("StoredEvents");
                 });
 
             modelBuilder.Entity("TechnicalTest.Domain.Post", b =>

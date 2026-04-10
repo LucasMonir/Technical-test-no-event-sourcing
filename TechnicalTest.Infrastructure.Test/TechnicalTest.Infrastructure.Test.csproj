@@ -27,4 +27,8 @@
     <ProjectReference Include="..\TechnicalTest.TestHelpers\TechnicalTest.TestHelpers.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Events\" />
+  </ItemGroup>
+
 </Project>
